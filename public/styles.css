@@ -62,14 +62,16 @@ footer {
   color:white;
 }
 .student_info > ul {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: repeat(7,1fr);
   list-style-type: none;
   font-size: 1.1rem;
   margin: 0;
   padding: 1.2rem 1rem;
   font-weight: bolder;
-  line-height: 1.5rem;
 }
-.student_info>ul span{
+.student_info>ul .value{
   color: rgb(102, 102, 136);
   font-weight: lighter;
   margin: 0 0.1rem;
@@ -110,6 +112,7 @@ footer {
     font-size: 2.5rem;
   }*/
   .student_info > ul {
+    gap:0 0.5rem;
     font-size: 1rem;
   }
   .main {
