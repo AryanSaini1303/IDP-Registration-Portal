@@ -73,17 +73,26 @@ app.get( '/auth/google/callback',
 
 app.get('/auth/google/success',isLoggedIn,async(req,res)=>{
   let result;
+  let name,email,admission,enrollment,school,program,contact;
   try {
-    console.log(req.user.email);
+    // console.log(req.user.email);
     const response=await db.query('select * from student where email=$1',[req.user.email]);
     result=response.rows;
+    result=result[0];
+    name=(result.name)?result.name:"--";
+    email=(req.user.email)?req.user.email:"--";
+    admission=(result.admission)?result.admission:"--";
+    enrollment=(result.enrollment)?result.enrollment:"--";
+    school=(result.school)?result.school:"--";
+    program=(result.program)?result.program:"--";
+    contact=(result.contact)?result.contact:"--";
     // console.log(result);
   } catch (error) {
     console.log(error);
     res.redirect('/');
   }
   // res.send(`hey ${req.user.displayName}, email: ${req.user.email}`)
-  res.render('index',{name:result[0].name,email:req.user.email,photo:req.user.photos[0].value,admission:result[0].admission,enrollment:result[0].enrollment,school:result[0].school,program:result[0].program,contact:result[0].contact});
+  res.render('index',{name,email,photo:req.user.photos[0].value,admission,enrollment,school,program,contact});
 })
 app.get('/auth/google/failure',isLoggedIn,(req,res)=>{
   alert("Invalid user");
