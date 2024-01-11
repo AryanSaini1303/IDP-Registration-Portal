@@ -3,6 +3,16 @@ const bodyParser=require('body-parser');
 const passport=require('passport');
 const session=require('express-session');
 require('./auth');
+const pg=require("pg");
+
+const db = new pg.Client({
+  user: "postgres",
+  host: "localhost",
+  database: "IDP Registration Portal",
+  password: "aryansaini9999",
+  port: 5432,
+});
+db.connect();
 
 const app = express();
 const port = 3000;
@@ -61,10 +71,19 @@ app.get( '/auth/google/callback',
         failureRedirect: '/auth/google/failure'
 }));
 
-app.get('/auth/google/success',isLoggedIn,(req,res)=>{
-  // console.log(req.user);
+app.get('/auth/google/success',isLoggedIn,async(req,res)=>{
+  let result;
+  try {
+    console.log(req.user.email);
+    const response=await db.query('select * from student where email=$1',[req.user.email]);
+    result=response.rows;
+    // console.log(result);
+  } catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
   // res.send(`hey ${req.user.displayName}, email: ${req.user.email}`)
-  res.render('index',{name:req.user.displayName,email:req.user.email,photo:req.user.photos[0].value});
+  res.render('index',{name:result[0].name,email:req.user.email,photo:req.user.photos[0].value,admission:result[0].admission,enrollment:result[0].enrollment,school:result[0].school,program:result[0].program,contact:result[0].contact});
 })
 app.get('/auth/google/failure',isLoggedIn,(req,res)=>{
   alert("Invalid user");
