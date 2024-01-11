@@ -1,0 +1,156 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Nunito", sans-serif;
+  font-family: "Varela Round", sans-serif;
+}
+header{
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color:white;
+}
+.header{
+  background-color: #333333;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  padding: 0 1rem;
+}
+.header img{
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+}
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: 1fr 6fr 0.5fr;
+}
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F4F4F4;
+}
+.card{
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  width: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.303);
+}
+.main {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333333;
+  margin: 0;
+  font-size: 0.8rem;
+  color:white;
+}
+.student_info > ul {
+  list-style-type: none;
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 1.2rem 1rem;
+  font-weight: bolder;
+}
+.student_info>ul span{
+  color: rgb(102, 102, 136);
+  font-weight: lighter;
+}
+.main button {
+  font-family: "Nunito", sans-serif;
+  font-family: "Salsa", cursive;
+  border: none;
+  background-color: #04364a;
+  color: whitesmoke;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  transition: all 0.3s;
+  cursor: url("/images/cursor.png"), auto;
+}
+.main button:hover {
+  box-shadow: 0.5rem 0.5rem 0.5rem black;
+  transform: scale(1.02, 1.02);
+}
+.main button:active {
+  transform: scale(0.95, 0.95);
+  opacity: 0.8;
+}
+.main > h1 {
+  font-size: 1.5rem;
+}
+.options {
+  display: flex;
+  gap: 1rem;
+  text-decoration: none;
+}
+@media only screen and (max-width: 1175px) {
+  /* .main button {
+    font-size: 1.2rem;
+  }
+  .main > h1 {
+    font-size: 2.5rem;
+  }*/
+  .student_info > ul {
+    font-size: 1rem;
+  }
+  .main {
+    justify-content: center;
+  } 
+}
+@media only screen and (max-width: 770px) {
+  header {
+    font-size: 1.5rem;
+  }
+  .student_info > ul {
+    font-size: 0.8rem;
+  }
+  .main {
+    justify-content: center;
+  }
+  /* footer {
+    font-size: 1rem;
+  } */
+  .main h1{
+    font-size: 1.2rem;
+  }
+  .main button{
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 574px) {
+  .card{
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 490px) {
+  .card{
+    width: 90%;
+  }
+  header {
+    font-size: 1rem;
+  }
+  .header img{
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  /* footer {
+    font-size: 0.8rem;
+  } */
+}

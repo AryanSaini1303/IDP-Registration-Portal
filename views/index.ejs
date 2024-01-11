@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="device-width, initial-scale=1.0">
+    <title>IDP Registration Portal</title>
+    <link rel="stylesheet" href="/public/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Salsa&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Varela+Round&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div></div>
+            <header>IDP Registration Portal</header>
+            <img src="<%= photo %>" alt="">
+        </div>
+        <div class="content">
+            <div class="card">
+                <div class="student_info">
+                    <ul>
+                        <li>Admission Number: </li>
+                        <li>Student Name: <span><%= name %></span></li>
+                        <li>Enrollment Number: </li>
+                        <li>Program: </li>
+                        <li>School: </li>
+                        <li>Mobile Number: </li>
+                        <li>Email-id: <span><%= email %></span></li>
+                    </ul>
+                </div>
+                <div class="main">
+                    <h1>Choose Your Category</h1>
+                    <div class="options">
+                        <a href="/research"><button>Research</button></a>
+                        <a href="/business"><button>Business</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2024 IDP Registration Portal. All rights reserved.</p>
+            <div style='display:none' class="icons8"><a target="_blank" href="https://icons8.com/icon/xrwE2Qxg9XYK/hand-cursor">Cursor</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></div>
+        </footer>
+    </div>
+    <script src="/scripts/script.js"></script>
+</body>
+</html>
