@@ -67,10 +67,12 @@ footer {
   margin: 0;
   padding: 1.2rem 1rem;
   font-weight: bolder;
+  line-height: 1.5rem;
 }
 .student_info>ul span{
   color: rgb(102, 102, 136);
   font-weight: lighter;
+  margin: 0 0.1rem;
 }
 .main button {
   font-family: "Nunito", sans-serif;
