@@ -102,6 +102,22 @@ app.get('/auth/google/logout',(req,res)=>{
   req.session.destroy()
   res.redirect('/');
 })
+app.get('/research',async(req,res)=>{
+  const response=await db.query("select distinct project_title from faculty where project_type='Research'");
+  let result=response.rows;
+  // result=result[0];
+  // console.log(result);
+  // console.log(result.length);
+  res.render('research',{result});
+})
+app.get('/business',async(req,res)=>{
+  const response=await db.query("select distinct project_title from faculty where project_type='Business'");
+  let result=response.rows;
+  // result=result[0];
+  // console.log(result);
+  // console.log(result.length);
+  res.render('business',{result});
+})
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
