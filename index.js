@@ -85,7 +85,7 @@ app.get("/auth/google/success", isLoggedIn, async (req, res) => {
   ]);
   result = response.rows;
   result = result[0];
-  // console.log(result);
+  // console.log(req.user.photos[0].value);//can't access photos of official ids, don't know why
   if (result == undefined) {
     res.render("login",{flag:true});
   } else {
