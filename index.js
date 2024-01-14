@@ -79,13 +79,16 @@ app.get(
 app.get("/auth/google/success", isLoggedIn, async (req, res) => {
   let result;
   let name, email, admission, enrollment, school, program, contact;
-  try {
-    // console.log(req.user.email);
-    const response = await db.query("select * from student where email=$1", [
-      req.user.email,
-    ]);
-    result = response.rows;
-    result = result[0];
+  // console.log(req.user.email);
+  const response = await db.query("select * from student where email=$1", [
+    req.user.email,
+  ]);
+  result = response.rows;
+  result = result[0];
+  console.log(result);
+  if (result == undefined) {
+    res.render("login",{flag:true});
+  } else {
     name = result.name ? result.name : "--";
     email = req.user.email ? req.user.email : "--";
     admission = result.admission ? result.admission : "--";
@@ -93,22 +96,18 @@ app.get("/auth/google/success", isLoggedIn, async (req, res) => {
     school = result.school ? result.school : "--";
     program = result.program ? result.program : "--";
     contact = result.contact ? result.contact : "--";
-    // console.log(result);
-  } catch (error) {
-    console.log(error);
-    res.redirect("/");
+    // res.send(`hey ${req.user.displayName}, email: ${req.user.email}`)
+    res.render("index", {
+      name,
+      email,
+      photo: req.user.photos[0].value,
+      admission,
+      enrollment,
+      school,
+      program,
+      contact,
+    });
   }
-  // res.send(`hey ${req.user.displayName}, email: ${req.user.email}`)
-  res.render("index", {
-    name,
-    email,
-    photo: req.user.photos[0].value,
-    admission,
-    enrollment,
-    school,
-    program,
-    contact,
-  });
 });
 app.get("/auth/google/failure", isLoggedIn, (req, res) => {
   alert("Invalid user");
