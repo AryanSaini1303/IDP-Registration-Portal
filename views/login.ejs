@@ -131,9 +131,12 @@
       </a>
       <a href="https://www.freepik.com/free-vector/my-password-concept-illustration_11436091.htm#query=login&position=34&from_view=keyword&track=sph&uuid=a2f5f3b5-867b-481a-9ca9-bb055f837a44" class="attribution">Image by storyset on Freepik</a>
     </div>
+    <div class="flag" style="display: none"><%= flag %></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+      console.log($(".flag").text());
       setTimeout(()=>{
-        if(<%= flag %>){
+        if($(".flag").text()=="true"){
           alert("Sign in with official E-mail ID only!");
         }
       },100);

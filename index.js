@@ -53,7 +53,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res) => {
-  res.render("login");
+  res.render("login",{flag:false});
 });
 
 app.get("/category", (req, res) => {
@@ -85,7 +85,7 @@ app.get("/auth/google/success", isLoggedIn, async (req, res) => {
   ]);
   result = response.rows;
   result = result[0];
-  console.log(result);
+  // console.log(result);
   if (result == undefined) {
     res.render("login",{flag:true});
   } else {
