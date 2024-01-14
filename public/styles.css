@@ -5,22 +5,22 @@ body {
   font-family: "Nunito", sans-serif;
   font-family: "Varela Round", sans-serif;
 }
-header{
+header {
   font-weight: bolder;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  color:white;
+  color: white;
 }
-.header{
+.header {
   background-color: #333333;
   display: flex;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
   padding: 0 1rem;
 }
-.header img{
+.header img {
   border-radius: 50%;
   height: 3rem;
   width: 3rem;
@@ -31,16 +31,16 @@ header{
   display: grid;
   grid-template-rows: 1fr 6fr 0.5fr;
 }
-.content{
+.content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
 }
-.card{
+.card {
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.303);
 }
@@ -59,19 +59,19 @@ footer {
   background-color: #333333;
   margin: 0;
   font-size: 0.8rem;
-  color:white;
+  color: white;
 }
 .student_info > ul {
   display: grid;
   grid-template-columns: 1fr 5fr;
-  grid-template-rows: repeat(7,1fr);
+  grid-template-rows: repeat(7, 1fr);
   list-style-type: none;
   font-size: 1.1rem;
   margin: 0;
   padding: 1.2rem 1rem;
   font-weight: bolder;
 }
-.student_info>ul .value{
+.student_info > ul .value {
   color: rgb(102, 102, 136);
   font-weight: lighter;
   margin: 0 0.1rem;
@@ -112,12 +112,12 @@ footer {
     font-size: 2.5rem;
   }*/
   .student_info > ul {
-    gap:0 0.5rem;
+    gap: 0 0.5rem;
     font-size: 1rem;
   }
   .main {
     justify-content: center;
-  } 
+  }
 }
 @media only screen and (max-width: 770px) {
   header {
@@ -132,26 +132,26 @@ footer {
   /* footer {
     font-size: 1rem;
   } */
-  .main h1{
+  .main h1 {
     font-size: 1.2rem;
   }
-  .main button{
+  .main button {
     font-size: 1rem;
   }
 }
 @media only screen and (max-width: 574px) {
-  .card{
+  .card {
     width: 60%;
   }
 }
 @media only screen and (max-width: 490px) {
-  .card{
+  .card {
     width: 90%;
   }
   header {
     font-size: 1rem;
   }
-  .header img{
+  .header img {
     height: 2.5rem;
     width: 2.5rem;
   }
