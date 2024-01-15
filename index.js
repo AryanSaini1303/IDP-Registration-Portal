@@ -4,6 +4,9 @@ const passport = require("passport");
 const session = require("express-session");
 require("./auth");
 const pg = require("pg");
+var category;
+var SDG_number;
+var photo;
 
 const db = new pg.Client({
   user: "postgres",
@@ -79,6 +82,7 @@ app.get(
 app.get("/auth/google/success", isLoggedIn, async (req, res) => {
   let result;
   let name, email, admission, enrollment, school, program, contact;
+  photo=req.user.photos[0].value;
   // console.log(req.user.email);
   const response = await db.query("select * from student where email=$1", [
     req.user.email,
@@ -100,7 +104,7 @@ app.get("/auth/google/success", isLoggedIn, async (req, res) => {
     res.render("index", {
       name,
       email,
-      photo: req.user.photos[0].value,
+      photo,
       admission,
       enrollment,
       school,
@@ -117,25 +121,27 @@ app.get("/auth/google/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
-app.get("/research", async (req, res) => {
-  const response = await db.query(
-    "select distinct project_title from faculty where project_type='Research'"
-  );
-  let result = response.rows;
-  // result=result[0];
-  // console.log(result);
-  // console.log(result.length);
-  res.render("research", { result });
+app.get("/Research", async (req, res) => {
+  category='Research';
+  // console.log(photo);
+  res.render("SDG",{category,photo});
+  });
+  app.get("/Business", async (req, res) => {
+  category='Business';
+  // console.log(photo);
+  res.render("SDG",{category,photo});
 });
-app.get("/business", async (req, res) => {
-  const response = await db.query(
-    "select distinct project_title from faculty where project_type='Business'"
-  );
-  let result = response.rows;
-  // result=result[0];
-  // console.log(result);
-  // console.log(result.length);
-  res.render("business", { result });
+app.get("/Research/SDG", async (req, res) => {
+  const query=req.query.q;
+  SDG_number=query;
+  // console.log(query);
+  res.sendStatus(200);
+  });
+  app.get("/Business/SDG", async (req, res) => {
+  const query=req.query.q;
+  SDG_number=query;
+  // console.log(query);
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {

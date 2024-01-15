@@ -1,6 +1,6 @@
 let count = 1;
 $("body > div > div.header > img").click(function() {
-  console.log($(window).width());
+  // console.log($(window).width());
   if($(window).width()<574){
     $("body > div > div.header > div.menu > a").html("<img src='/images/logout.png'></img>")
   }

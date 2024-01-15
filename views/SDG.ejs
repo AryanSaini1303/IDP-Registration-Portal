@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Nunito", sans-serif;
+        font-family: "Varela Round", sans-serif;
+        background-color: #f4f4f4;
+      }
+      header {
+        font-weight: bolder;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: white;
+      }
+      .header {
+        position: fixed;
+        background-color: #333333;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        top: 0;
+        left: 0;
+        width: 98%;
+      }
+      .header img {
+        border-radius: 50%;
+        height: 3rem;
+        width: 3rem;
+        z-index: 1;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+      .header .menu {
+        background-color: white;
+        position: absolute;
+        right: 1.1rem;
+        height: 3rem;
+        width: 10rem;
+        border-radius: 32px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        transition: all 0.5s;
+        opacity: 0;
+        display: none;
+      }
+      .header .menu:hover {
+        background-color: red;
+      }
+      .header .menu a {
+        text-decoration: none;
+        color: black;
+        font-weight: bolder;
+        padding: 0.9rem 2rem;
+        border-radius: 32px;
+        cursor: url("/images/cursor.png"), auto;
+        transition: all 0.5s;
+      }
+      .header .menu a:hover {
+        color: white;
+      }
+      @media only screen and (max-width: 1051px) {
+        .header {
+          width: 97%;
+        }
+      }
+      @media only screen and (max-width: 770px) {
+        header {
+          font-size: 1.5rem;
+        }
+        .header {
+          width: 96%;
+        }
+        body > .wrapper > .cards > ul li * {
+          font-size: 0.9rem;
+        }
+      }
+      @media only screen and (max-width: 574px) {
+        body > div > div.header > div.menu > a > img {
+          height: 2.5rem;
+          width: 2.5rem;
+          margin-left: 4px;
+        }
+        body > div > div.header > div.menu > a {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+        }
+        body > div > div.header > div.menu {
+          width: 20%;
+        }
+      }
+      @media only screen and (max-width: 490px) {
+        header {
+          font-size: 1rem;
+        }
+        .header img {
+          height: 2.5rem;
+          width: 2.5rem;
+        }
+        footer * {
+          font-size: 0.5rem;
+        }
+        body > div > div.header > div.menu > a > img {
+          height: 2rem;
+          width: 2rem;
+        }
+        body > div > div.header > div.menu {
+          height: 55%;
+        }
+        .header {
+          width: 94%;
+        }
+        body > div.wrapper > div.cards > ul * {
+          flex-grow: 1;
+        }
+        body > div.wrapper > div.cards > ul {
+          padding: 0 1rem;
+        }
+      }
+      @media only screen and (max-width: 389px) {
+        body > div > div.header > div.menu {
+          width: 25%;
+        }
+      }
+      @media only screen and (max-width: 348px) {
+        body > div > div.header > div.menu > a > img {
+          height: 1.5rem;
+          width: 1.5rem;
+        }
+        .header img {
+          height: 1.75rem;
+          width: 1.75rem;
+        }
+        body > div > div.header > div.menu {
+          height: 50%;
+          width: 20%;
+        }
+        .header {
+          width: 91%;
+        }
+      }
+      footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #333333;
+        margin: 0;
+        font-size: 0.8rem;
+        color: white;
+      }
+      body > .wrapper > .cards > ul {
+        margin: 8rem 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 0;
+      }
+      body > .wrapper > .cards > ul li {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.303);
+        width: 25%;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s;
+      }
+      body > .wrapper > .cards > ul li:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.448);
+      }
+      body > .wrapper > .cards > ul li:active {
+        transform: scale(0.95, 0.95);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.947);
+      }
+      body > .wrapper > .cards > ul li * {
+        color: black;
+      }
+      body > .wrapper > .cards > ul li a h1 {
+        text-align: center;
+      }
+      body > .wrapper > .cards > ul li a p {
+        color: rgb(125, 121, 121);
+        font-weight: bold;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="menu">
+          <a href="/auth/google/logout">Log Out</a>
+        </div>
+        <div></div>
+        <header>IDP Registration Portal</header>
+        <img src="<%= photo %>" alt="" />
+      </div>
+      <div class="cards">
+        <ul>
+          <li>
+            <a href="/<%= category %>/SDG?q=1" style="text-decoration: none">
+              <h1>SDG 1</h1>
+              <p>NO POVERTY</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=2" style="text-decoration: none">
+              <h1>SDG 2</h1>
+              <p>ZERO HUNGER</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=3" style="text-decoration: none">
+              <h1>SDG 3</h1>
+              <p>GOOD HEALTH AND WELL-BEING</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=4" style="text-decoration: none">
+              <h1>SDG 4</h1>
+              <p>QUALITY EDUCATION</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=5" style="text-decoration: none">
+              <h1>SDG 5</h1>
+              <p>GENDER EQUALITY</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=6" style="text-decoration: none">
+              <h1>SDG 6</h1>
+              <p>CLEAN WATER AND SANITITATION</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=7" style="text-decoration: none">
+              <h1>SDG 7</h1>
+              <p>AFFORDABLE AND CLEAN ENERGY</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=8" style="text-decoration: none">
+              <h1>SDG 8</h1>
+              <p>DECENT WORK AND ECONOMIC GROWTH</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=9" style="text-decoration: none">
+              <h1>SDG 9</h1>
+              <p>INDUSTRY, INNOVATION AND INFRASTRUCTURE</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=10" style="text-decoration: none">
+              <h1>SDG 10</h1>
+              <p>REDUCED INEQUALITIES</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=11" style="text-decoration: none">
+              <h1>SDG 11</h1>
+              <p>SUSTAINABLE CITIES AND COMMUNITIES</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=12" style="text-decoration: none">
+              <h1>SDG 12</h1>
+              <p>RESPONSIBLE CONSUMPTION AND PRODUCTION</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=13" style="text-decoration: none">
+              <h1>SDG 13</h1>
+              <p>CLIMATE ACTION</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=14" style="text-decoration: none">
+              <h1>SDG 14</h1>
+              <p>LIFE BELOW WATER</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=15" style="text-decoration: none">
+              <h1>SDG 15</h1>
+              <p>LIFE ON LAND</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=16" style="text-decoration: none">
+              <h1>SDG 16</h1>
+              <p>PEACE, JUSTICE AND STRONG INSTITUTIONS</p>
+            </a>
+          </li>
+          <li>
+            <a href="/<%= category %>/SDG?q=17" style="text-decoration: none">
+              <h1>SDG 17</h1>
+              <p>PARTNERSHIPS FOR THE GOALS</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <footer>
+      <p>&copy; 2024 IDP Registration Portal. All rights reserved.</p>
+      <div class="icons8">
+        <a
+          target="_blank"
+          href="https://icons8.com/icon/xrwE2Qxg9XYK/hand-cursor"
+          >Cursor</a
+        >
+        icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+      </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      let count = 1;
+      $("body > div > div.header > img").click(function () {
+        if ($(window).width() < 574) {
+          $("body > div > div.header > div.menu > a").html(
+            "<img src='/images/logout.png'></img>"
+          );
+        } else {
+          $("body > div > div.header > div.menu > a").html("Log Out");
+        }
+        count++;
+        if (count % 2 == 0) {
+          $("body > div > div.header > div.menu").css("opacity", "1");
+          $("body > div > div.header > div.menu").css("display", "flex");
+          // $("body > div > div.header > div.menu").addClass("revealMenu");
+          // $("body > div > div.header > div.menu").removeClass("hideMenu");
+        } else {
+          $("body > div > div.header > div.menu").css("opacity", "0");
+          $("body > div > div.header > div.menu").css("display", "none");
+          // $("body > div > div.header > div.menu").removeClass("revealMenu");
+          // $("body > div > div.header > div.menu").addClass("hideMenu");
+        }
+      });
+      let count1 = 1;
+      $("body > div > div.header > div.menu").click(function () {
+        count1++;
+        if (count1 % 2 == 0) {
+          $("body > div > div.header > div.menu").css("opacity", "1");
+          $("body > div > div.header > div.menu").css("display", "flex");
+          // $("body > div > div.header > div.menu").removeClass("hideMenu");
+          // $("body > div > div.header > div.menu").addClass("revealMenu");
+        } else {
+          $("body > div > div.header > div.menu").css("opacity", "0");
+          $("body > div > div.header > div.menu").css("display", "none");
+          // $("body > div > div.header > div.menu").removeClass("revealMenu");
+          // $("body > div > div.header > div.menu").addClass("hideMenu");
+        }
+      });
+    </script>
+  </body>
+</html>
