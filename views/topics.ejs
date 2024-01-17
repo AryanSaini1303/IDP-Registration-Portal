@@ -9,6 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Varela+Round&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Document</title>
     <style>
       body {
@@ -79,6 +80,9 @@
         .header {
           width: 97%;
         }
+        body > .wrapper > .cards > ul li h2{
+          font-size: 0.9rem;
+        }
       }
       @media only screen and (max-width: 770px) {
         header {
@@ -89,6 +93,23 @@
         }
         body > .wrapper > .cards > ul li * {
           font-size: 0.9rem;
+        }
+        body > .wrapper > .cards > ul li  a  h1{
+          font-size: 1.3rem;
+        }
+        body > .wrapper > .cards > ul li  a  h2{
+          font-size: 0.8rem;
+        }
+      }
+      @media only screen and (max-width: 592px) {
+        body > .wrapper > .cards > ul li  a  h1{
+          font-size: 1rem;
+        }
+        body > .wrapper > .cards > ul li  a  h2{
+          font-size: 0.6rem;
+        }
+        body > .wrapper > .cards > ul li  a  p{
+          font-size: 0.6rem;
         }
       }
       @media only screen and (max-width: 574px) {
@@ -127,9 +148,6 @@
         .header {
           width: 94%;
         }
-        body > div.wrapper > div.cards > ul * {
-          flex-grow: 1;
-        }
         body > div.wrapper > div.cards > ul {
           padding: 0 1rem;
         }
@@ -137,6 +155,9 @@
       @media only screen and (max-width: 389px) {
         body > div > div.header > div.menu {
           width: 25%;
+        }
+        body > .wrapper > .cards > ul li  a  h1{
+          font-size: 0.85rem;
         }
       }
       @media only screen and (max-width: 348px) {
@@ -166,46 +187,53 @@
         color: white;
       }
       body > .wrapper > .cards > ul {
+        min-height: 57.2vh;
         margin: 8rem 0;
         list-style: none;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
         gap: 20px;
-        padding: 0;
+        padding: 0 4rem;
       }
       body > .wrapper > .cards > ul li {
-        cursor: url("/images/cursor.png"),auto;
+        cursor: url("/images/cursor.png"), auto;
         background-color: white;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.303);
-        width: 25%;
         padding: 0.5rem 1rem;
         transition: all 0.3s;
       }
+      body > .wrapper > .cards > ul li a{
+        display: grid;
+        grid-template-columns: 8fr 2fr;
+        gap:2rem;
+      }
+      body > .wrapper > .cards > ul li h1{
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        display: flex;        
+        align-items: center;
+        font-size: 1.7rem;     
+      }
       body > .wrapper > .cards > ul li:hover {
-        transform: scale(1.01,1.01);
+        transform: scale(1.01, 1.01);
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.448);
       }
       body > .wrapper > .cards > ul li:active {
-        transform: scale(0.95, 0.95);
+        transform: scale(0.98, 0.98);
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.947);
       }
       body > .wrapper > .cards > ul li * {
-        cursor: url("/images/cursor.png"),auto;
+        cursor: url("/images/cursor.png"), auto;
         color: black;
       }
-      body > .wrapper > .cards > ul li a h1 {
-        text-align: center;
-      }
+      
       body > .wrapper > .cards > ul li a p {
         color: rgb(125, 121, 121);
         font-weight: bold;
-        text-align: center;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
     </style>
   </head>
@@ -217,116 +245,24 @@
         </div>
         <div></div>
         <header>IDP Registration Portal</header>
-        <img src="<%= photo %>" alt="" />
+        <img src="https://picsum.photos/id/234/600/400" alt="" />
       </div>
       <div class="cards">
         <ul>
-          <li>
-            <a href="/<%= category %>/SDG?q=1" style="text-decoration: none">
-              <h1>SDG 1</h1>
-              <p>NO POVERTY</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=2" style="text-decoration: none">
-              <h1>SDG 2</h1>
-              <p>ZERO HUNGER</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=3" style="text-decoration: none">
-              <h1>SDG 3</h1>
-              <p>GOOD HEALTH AND WELL-BEING</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=4" style="text-decoration: none">
-              <h1>SDG 4</h1>
-              <p>QUALITY EDUCATION</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=5" style="text-decoration: none">
-              <h1>SDG 5</h1>
-              <p>GENDER EQUALITY</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=6" style="text-decoration: none">
-              <h1>SDG 6</h1>
-              <p>CLEAN WATER AND SANITITATION</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=7" style="text-decoration: none">
-              <h1>SDG 7</h1>
-              <p>AFFORDABLE AND CLEAN ENERGY</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=8" style="text-decoration: none">
-              <h1>SDG 8</h1>
-              <p>DECENT WORK AND ECONOMIC GROWTH</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=9" style="text-decoration: none">
-              <h1>SDG 9</h1>
-              <p>INDUSTRY, INNOVATION AND INFRASTRUCTURE</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=10" style="text-decoration: none">
-              <h1>SDG 10</h1>
-              <p>REDUCED INEQUALITIES</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=11" style="text-decoration: none">
-              <h1>SDG 11</h1>
-              <p>SUSTAINABLE CITIES AND COMMUNITIES</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=12" style="text-decoration: none">
-              <h1>SDG 12</h1>
-              <p>RESPONSIBLE CONSUMPTION AND PRODUCTION</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=13" style="text-decoration: none">
-              <h1>SDG 13</h1>
-              <p>CLIMATE ACTION</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=14" style="text-decoration: none">
-              <h1>SDG 14</h1>
-              <p>LIFE BELOW WATER</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=15" style="text-decoration: none">
-              <h1>SDG 15</h1>
-              <p>LIFE ON LAND</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=16" style="text-decoration: none">
-              <h1>SDG 16</h1>
-              <p>PEACE, JUSTICE AND STRONG INSTITUTIONS</p>
-            </a>
-          </li>
-          <li>
-            <a href="/<%= category %>/SDG?q=17" style="text-decoration: none">
-              <h1>SDG 17</h1>
-              <p>PARTNERSHIPS FOR THE GOALS</p>
-            </a>
-          </li>
+          <% available_topics.forEach((element, index) => {%>
+            <li>
+              <a href="/selection?q=<%= available_topics_id[index] %>" style="text-decoration: none">
+                <h1><%= element %></h1>
+                <div class="teachers_info">
+                  <h2><%= teachers[index] %></h2>
+                  <p><%= designation[index] %></p>
+                </div>
+              </a>
+            </li>
+          <% }) %>
         </ul>
-      </div>
+      </div>      
     </div>
-    <h1 style="display:none" class="flag"><%= flag %></h1>
     <footer>
       <p>&copy; 2024 IDP Registration Portal. All rights reserved.</p>
       <div class="icons8">
@@ -377,12 +313,6 @@
           // $("body > div > div.header > div.menu").addClass("hideMenu");
         }
       });
-      setTimeout(()=>{
-        if($(".flag").text()=='true'){
-          alert("No topics available for this SDG!");
-          $(".flag").text('false');
-        }
-      },100)
     </script>
   </body>
 </html>
