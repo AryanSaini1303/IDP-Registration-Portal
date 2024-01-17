@@ -8,6 +8,8 @@ var category;
 var SDG_number;
 var photo;
 var school;
+var student_id;
+var teacher_id;
 
 const db = new pg.Client({
   user: "postgres",
@@ -84,16 +86,17 @@ app.get("/auth/google/success", isLoggedIn, async (req, res) => {
   let result;
   let name, email, admission, enrollment, program, contact;
   photo = req.user.photos[0].value;
-  // console.log(req.user.email);
   const response = await db.query("select * from student where email=$1", [
     req.user.email,
   ]);
   result = response.rows;
   result = result[0];
+  // console.log(result);
   // console.log(req.user.photos[0].value);//can't access photos of official ids, don't know why
   if (result == undefined) {
     res.render("login", { flag: true });
   } else {
+    student_id=result.id;
     name = result.name ? result.name : "--";
     email = req.user.email ? req.user.email : "--";
     admission = result.admission ? result.admission : "--";
@@ -204,7 +207,27 @@ app.get("/topic",async (req,res)=>{
       res.render('topics',{available_topics,available_topics_id,teachers,designation});// we can't use this outside the forEach function as this function is set as async so if we render the file outside this function then the containers will be empty as the data assignment in those containers is taking place in an async function i.e. "forEach"
     }
   })
+})
+app.get('/confirmation',async (req,res)=>{
+  let sdg_list=[];
+  const query=req.query.q;
+  teacher_id=query;
   // res.sendStatus(200);
+  const response=await db.query('select name, project_title from faculty where id=$1',[teacher_id]);
+  const result=response.rows;
+  const response1=await db.query('select sdg from faculty where project_title=$1',[result[0].project_title]);
+  const result1=response1.rows;
+  // console.log(result1);
+  result1.forEach(element=>{
+    // console.log(element);
+    sdg_list.push(element.sdg)
+  })
+  // console.log(sdg_list);
+  res.render('confirmation',{topic:result[0].project_title, SDG_number:sdg_list, teacher:result[0].name, photo});
+})
+app.get('/selection', async (req,res)=>{
+  await db.query('update student set teacher_id=$1 where id=$2',[teacher_id,student_id]);
+  res.render('final',[photo]);
 })
 
 app.listen(port, () => {

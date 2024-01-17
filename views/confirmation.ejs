@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="device-width, initial-scale=1.0" />
+    <title>IDP Registration Portal</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Salsa&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .student_info>ul{
+        grid-template-rows: repeat(3, 1fr);
+        gap:10px
+      }
+      .main {
+        justify-content: center;
+      }
+      .student_info>h3{
+        text-align: center;
+      }
+      .student_info>ul li{
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="menu">
+          <a href="/auth/google/logout">Log Out</a>
+        </div>
+        <div></div>
+        <header>IDP Registration Portal</header>
+        <img src="https://picsum.photos/id/685/600/400" alt="">
+        <!-- <img src="<%= photo %>" alt="" /> -->
+      </div>
+      <div class="content">
+        <div class="card">
+          <div class="student_info">
+            <h3>Check details thoroughly and click on 'Submit' to Complete Registration</h3>
+            <ul>
+              <li class="holder">SDG:</li>
+              <li class="value"><%= SDG_number %></li>
+              <li class="holder">Topic:</li>
+              <li class="value"><%= topic %></li>
+              <li class="holder">Teacher:</li>
+              <li class="value"><%= teacher %></li>
+            </ul>
+          </div>
+          <div class="main">
+            <div class="options">
+              <a href="/selection"><button>Submit</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <p>&copy; 2024 IDP Registration Portal. All rights reserved.</p>
+        <div class="icons8">
+          <a
+            target="_blank"
+            href="https://icons8.com/icon/xrwE2Qxg9XYK/hand-cursor"
+            >Cursor</a
+          >
+          icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        </div>
+      </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/scripts/script.js"></script>
+  </body>
+</html>
