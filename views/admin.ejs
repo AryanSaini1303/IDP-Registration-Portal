@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="device-width, initial-scale=1.0" />
+    <title>IDP Registration Portal</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Salsa&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .student_info > ul {
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .main {
+        justify-content: center;
+      }
+      .student_info > h3 {
+        text-align: center;
+      }
+      .student_info > ul li {
+        display: flex;
+        align-items: center;
+      }
+      .main button {
+        font-family: "Nunito", sans-serif;
+        font-family: "Salsa", cursive;
+        border: none;
+        background-color: #04364a;
+        color: whitesmoke;
+        font-size: 1.1rem;
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        transition: all 0.3s;
+        cursor: url("/images/cursor.png"), auto;
+      }
+      .main button:hover {
+        box-shadow: 0.5rem 0.5rem 0.5rem black;
+        transform: scale(1.02, 1.02);
+      }
+      .main button:active {
+        transform: scale(0.95, 0.95);
+        opacity: 0.8;
+      }
+      .card{
+        width: fit-content;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="menu">
+          <a href="/auth/google/logout">Log Out</a>
+        </div>
+        <div></div>
+        <header>IDP Registration Portal</header>
+        <img src="https://picsum.photos/id/685/600/400" alt="" />
+      </div>
+      <div class="content">
+        <div class="card">
+          <div class="main">
+            <div class="options">
+              <a href="/admin/score"><button>Score groups</button></a>
+              <a href="/admin/view"><button>View groups</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <p>&copy; 2024 IDP Registration Portal. All rights reserved.</p>
+        <div class="icons8">
+          <a
+            target="_blank"
+            href="https://icons8.com/icon/xrwE2Qxg9XYK/hand-cursor"
+            >Cursor</a
+          >
+          icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        </div>
+      </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/scripts/script.js"></script>
+  </body>
+</html>

@@ -93,7 +93,10 @@ app.get("/auth/google/success", isLoggedIn, async (req, res) => {
   result = result[0];
   // console.log(result);
   // console.log(req.user.photos[0].value);//can't access photos of official ids, don't know why
-  if (result == undefined) {
+  if(req.user.email=='idphead.gdgu@gmail.com'){
+    res.render('admin');
+  }
+  else if (result == undefined) {
     res.render("login", { flag: true });
   } else {
     student_id=result.id;
@@ -228,6 +231,12 @@ app.get('/confirmation',async (req,res)=>{
 app.get('/selection', async (req,res)=>{
   await db.query('update student set teacher_id=$1 where id=$2',[teacher_id,student_id]);
   res.render('final',[photo]);
+})
+app.get('/admin/view',async(req,res)=>{
+  
+})
+app.get('/admin/score',async(req,res)=>{
+
 })
 
 app.listen(port, () => {
