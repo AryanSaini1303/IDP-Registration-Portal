@@ -93,13 +93,12 @@ app.get("/auth/google/success", isLoggedIn, async (req, res) => {
   result = result[0];
   // console.log(result);
   // console.log(req.user.photos[0].value);//can't access photos of official ids, don't know why
-  if(req.user.email=='idphead.gdgu@gmail.com'){
-    res.render('admin');
-  }
-  else if (result == undefined) {
+  if (req.user.email == "idphead.gdgu@gmail.com") {
+    res.render("admin");
+  } else if (result == undefined) {
     res.render("login", { flag: true });
   } else {
-    student_id=result.id;
+    student_id = result.id;
     name = result.name ? result.name : "--";
     email = req.user.email ? req.user.email : "--";
     admission = result.admission ? result.admission : "--";
@@ -131,12 +130,12 @@ app.get("/auth/google/logout", (req, res) => {
 app.get("/Research", (req, res) => {
   category = "Research";
   // console.log(photo);
-  res.render("SDG", { category, photo,flag:false});
+  res.render("SDG", { category, photo, flag: false });
 });
 app.get("/Business", (req, res) => {
   category = "Business";
   // console.log(photo);
-  res.render("SDG", { category, photo,flag:false});
+  res.render("SDG", { category, photo, flag: false });
 });
 app.get("/Research/SDG", (req, res) => {
   const query = req.query.q;
@@ -150,93 +149,166 @@ app.get("/Business/SDG", (req, res) => {
   // console.log(query);
   res.redirect("/topic");
 });
-app.get("/topic",async (req,res)=>{
-  let current_school=school;
-  let available_topics=[];
-  let available_topics_id=[];
-  let teachers=[];
-  let designation=[];
-  const response=await db.query('select distinct project_title,id,name,designation from faculty where project_type=$1 and sdg=$2',[category,SDG_number])
-  const result=response.rows;
+app.get("/topic", async (req, res) => {
+  let current_school = school;
+  let available_topics = [];
+  let available_topics_id = [];
+  let teachers = [];
+  let designation = [];
+  const response = await db.query(
+    "select distinct project_title,id,name,designation from faculty where project_type=$1 and sdg=$2",
+    [category, SDG_number]
+  );
+  const result = response.rows;
   // console.log(result);
-  if(result.length==0){
-    res.render("SDG",{category, photo, flag:true})
+  if (result.length == 0) {
+    res.render("SDG", { category, photo, flag: true });
   }
-  result.forEach(async (element,index)=>{
-    const response1=await db.query('select id from student where teacher_id=$1',[element.id]);
-    const result1=response1.rows;
-    if(result1.length<6){
+  result.forEach(async (element, index) => {
+    const response1 = await db.query(
+      "select id from student where teacher_id=$1",
+      [element.id]
+    );
+    const result1 = response1.rows;
+    if (result1.length < 6) {
       available_topics.push(element.project_title);
       available_topics_id.push(element.id);
       teachers.push(element.name);
       designation.push(element.designation);
-    }
-    else{
+    } else {
       // console.log(element.project_title);
-      const response2=await db.query('select distinct school from student where teacher_id=$1',[element.id]);
-      const distinct_schools=response2.rows;
+      const response2 = await db.query(
+        "select distinct school from student where teacher_id=$1",
+        [element.id]
+      );
+      const distinct_schools = response2.rows;
       // the distinct_schools array contains two objects, each with a school property
-      if(distinct_schools.length==3 && result1.length<8){
+      if (distinct_schools.length == 3 && result1.length < 8) {
         // console.log(element.project_title);
         available_topics.push(element.project_title);
         available_topics_id.push(element.id);
         teachers.push(element.name);
         designation.push(element.designation);
-      }
-      else if(distinct_schools.length==2 && result1.length==6){
+      } else if (distinct_schools.length == 2 && result1.length == 6) {
         available_topics.push(element.project_title);
         available_topics_id.push(element.id);
         teachers.push(element.name);
         designation.push(element.designation);
-      }
-      else if(distinct_schools.length==2 && result1.length==7 && !distinct_schools.some(obj => obj.school === current_school)){// here we are selecting each object of array distinct_schools and we are comparing values of "school" property against our variable current_school
+      } else if (
+        distinct_schools.length == 2 &&
+        result1.length == 7 &&
+        !distinct_schools.some((obj) => obj.school === current_school)
+      ) {
+        // here we are selecting each object of array distinct_schools and we are comparing values of "school" property against our variable current_school
         available_topics.push(element.project_title);
         available_topics_id.push(element.id);
         teachers.push(element.name);
         designation.push(element.designation);
-      }
-      else if(distinct_schools.length==1 && result1.length==6 && !distinct_schools.some(obj => obj.school === current_school)){
+      } else if (
+        distinct_schools.length == 1 &&
+        result1.length == 6 &&
+        !distinct_schools.some((obj) => obj.school === current_school)
+      ) {
         available_topics.push(element.project_title);
         available_topics_id.push(element.id);
         teachers.push(element.name);
         designation.push(element.designation);
       }
     }
-    if(index==result.length-1){
+    if (index == result.length - 1) {
       // console.log("available topics=>",available_topics);
       // console.log("available_topics_id",available_topics_id);
       // console.log("teachers",teachers);
       // console.log("designation",designation);
-      res.render('topics',{available_topics,available_topics_id,teachers,designation});// we can't use this outside the forEach function as this function is set as async so if we render the file outside this function then the containers will be empty as the data assignment in those containers is taking place in an async function i.e. "forEach"
+      res.render("topics", {
+        available_topics,
+        available_topics_id,
+        teachers,
+        designation,
+      }); // we can't use this outside the forEach function as this function is set as async so if we render the file outside this function then the containers will be empty as the data assignment in those containers is taking place in an async function i.e. "forEach"
     }
-  })
-})
-app.get('/confirmation',async (req,res)=>{
-  let sdg_list=[];
-  const query=req.query.q;
-  teacher_id=query;
+  });
+});
+app.get("/confirmation", async (req, res) => {
+  let sdg_list = [];
+  const query = req.query.q;
+  teacher_id = query;
   // res.sendStatus(200);
-  const response=await db.query('select name, project_title from faculty where id=$1',[teacher_id]);
-  const result=response.rows;
-  const response1=await db.query('select sdg from faculty where project_title=$1',[result[0].project_title]);
-  const result1=response1.rows;
+  const response = await db.query(
+    "select name, project_title from faculty where id=$1",
+    [teacher_id]
+  );
+  const result = response.rows;
+  const response1 = await db.query(
+    "select sdg from faculty where project_title=$1",
+    [result[0].project_title]
+  );
+  const result1 = response1.rows;
   // console.log(result1);
-  result1.forEach(element=>{
+  result1.forEach((element) => {
     // console.log(element);
-    sdg_list.push(element.sdg)
-  })
+    sdg_list.push(element.sdg);
+  });
   // console.log(sdg_list);
-  res.render('confirmation',{topic:result[0].project_title, SDG_number:sdg_list, teacher:result[0].name, photo});
-})
-app.get('/selection', async (req,res)=>{
-  await db.query('update student set teacher_id=$1 where id=$2',[teacher_id,student_id]);
-  res.render('final',[photo]);
-})
-app.get('/admin/view',async(req,res)=>{
-  
-})
-app.get('/admin/score',async(req,res)=>{
-
+  res.render("confirmation", {
+    topic: result[0].project_title,
+    SDG_number: sdg_list,
+    teacher: result[0].name,
+    photo,
+  });
+});
+app.get("/selection", async (req, res) => {
+  await db.query("update student set teacher_id=$1 where id=$2", [
+    teacher_id,
+    student_id,
+  ]);
+  res.render("final", [photo]);
+});
+app.get("/admin/view", async (req, res) => {});
+let flag1=false;
+app.get("/admin/score", async (req, res) => {
+  const response = await db.query("select distinct * from faculty");
+  const data = response.rows;
+  // console.log("result", data);
+  res.render("score", { data, flag1});
+  flag1=false;
+});
+app.get("/search", async (req, res) => {
+  const query = req.query.q.replace(/\b\w/g, (match) => match.toUpperCase());
+  // console.log(query);
+  try {
+    const response = await db.query(
+      "SELECT * FROM faculty WHERE LOWER(name) LIKE $1",
+      [`%${query.toLowerCase()}%`]
+    );
+    const result = response.rows;
+    function removeObjectsWithSameName(array) {
+      const data = new Set();
+      return array.filter((obj) => {
+        if (!data.has(obj.name)) {
+          data.add(obj.name);
+          return true;
+        }
+        return false;
+      });
+    }
+    const data = removeObjectsWithSameName(result);
+    // console.log(
+    //   "here======================================================>",
+    //   data
+    // );
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
+app.get("/scoring",async(req,res)=>{
+  const query1=req.query.q1;
+  const query2=req.query.q2;
+  // console.log(query1,query2);
+  await db.query("update faculty set score=$1 where name=$2",[query2,query1]);
+  flag1=true;
+  res.redirect("/admin/score");
 })
 
 app.listen(port, () => {
