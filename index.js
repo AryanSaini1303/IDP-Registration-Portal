@@ -10,6 +10,7 @@ var photo;
 var school;
 var student_id;
 var teacher_id;
+var data1;
 
 const db = new pg.Client({
   user: "postgres",
@@ -21,6 +22,7 @@ const db = new pg.Client({
 db.connect();
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3000;
 app.use(
   "/public",
@@ -31,7 +33,7 @@ app.use(
     },
   })
 );
-app.use(bodyParser.json()); // necessary to configure server to receive variables from xml requests
+// app.use(bodyParser.json()); // necessary to configure server to receive variables from xml requests
 app.set("view engine", "ejs");
 app.use(express.static("static"));
 app.use(
@@ -46,7 +48,6 @@ app.use(
 function isLoggedIn(req, res, next) {
   req.user ? next() : res.sendStatus(401);
 }
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
     secret: "mysecret",
@@ -265,13 +266,26 @@ app.get("/selection", async (req, res) => {
   res.render("final", [photo]);
 });
 app.get("/admin/view", async (req, res) => {});
-let flag1=false;
+function removeObjectsWithSameName(array) {
+  const data = new Set();
+  return array.filter((obj) => {
+    if (!data.has(obj.name)) {
+      data.add(obj.name);
+      return true;
+    }
+    return false;
+  });
+}
+let flag1 = false;
 app.get("/admin/score", async (req, res) => {
-  const response = await db.query("select distinct * from faculty");
-  const data = response.rows;
-  // console.log("result", data);
-  res.render("score", { data, flag1});
-  flag1=false;
+  const response = await db.query("select name,id,project_title from faculty");
+  let data = response.rows;
+  data = removeObjectsWithSameName(data);
+  const response1 = await db.query("select * from student");
+  data1 = response1.rows;
+  // console.log("result", data1);
+  res.render("score", { data, data1, flag1 });
+  flag1 = false;
 });
 app.get("/search", async (req, res) => {
   const query = req.query.q.replace(/\b\w/g, (match) => match.toUpperCase());
@@ -282,34 +296,32 @@ app.get("/search", async (req, res) => {
       [`%${query.toLowerCase()}%`]
     );
     const result = response.rows;
-    function removeObjectsWithSameName(array) {
-      const data = new Set();
-      return array.filter((obj) => {
-        if (!data.has(obj.name)) {
-          data.add(obj.name);
-          return true;
-        }
-        return false;
-      });
-    }
     const data = removeObjectsWithSameName(result);
     // console.log(
     //   "here======================================================>",
     //   data
     // );
-    res.json(data);
+    const combinedData ={
+      data:data,
+      data1:data1
+    } 
+    res.json(combinedData);
   } catch (error) {
     console.log(error);
   }
 });
-app.get("/scoring",async(req,res)=>{
-  const query1=req.query.q1;
-  const query2=req.query.q2;
-  // console.log(query1,query2);
-  await db.query("update faculty set score=$1 where name=$2",[query2,query1]);
-  flag1=true;
+app.post("/scoring", async (req, res) => {
+  const query1 = req.body.Criteria1;
+  const query2 = req.body.Criteria2;
+  const query3 = req.body.Criteria3;
+  const query4 = req.body.Criteria4;
+  const query5 = req.body.Criteria5;
+  // const query2 = req.query.q2;
+  console.log(query1, query2, query3, query4, query5);
+  // await db.query("update faculty set score=$1 where name=$2", [query2, query1]);
+  flag1 = true;
   res.redirect("/admin/score");
-})
+});
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
