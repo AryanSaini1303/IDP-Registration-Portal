@@ -4,6 +4,7 @@ const passport = require("passport");
 const session = require("express-session");
 require("./auth");
 const pg = require("pg");
+const { parse } = require("dotenv");
 var category;
 var SDG_number;
 var photo;
@@ -311,9 +312,52 @@ app.get("/search", async (req, res) => {
   }
 });
 app.post("/scoring", async (req, res) => {
-  console.log(req.body);
-  // const query2 = req.query.q2;
-  // await db.query("update faculty set score=$1 where name=$2", [query2, query1]);
+  // console.log(req.body);
+  const student_ids = req.body.student_ids;
+  const teacher_id = req.body.teacher_id;
+  // console.log(teacher_id);
+  let criteria1Marks = req.body.Criteria1;
+  criteria1Marks = criteria1Marks.map(function (id) {
+    return parseInt(id, 10);
+  });
+  let criteria2Marks = req.body.Criteria2;
+  criteria2Marks = criteria2Marks.map(function (id) {
+    return parseInt(id, 10);
+  });
+  let criteria3Marks = req.body.Criteria3;
+  criteria3Marks = criteria3Marks.map(function (id) {
+    return parseInt(id, 10);
+  });
+  let criteria4Marks = req.body.Criteria4;
+  criteria4Marks = criteria4Marks.map(function (id) {
+    return parseInt(id, 10);
+  });
+  let criteria5Marks = req.body.Criteria5;
+  criteria5Marks = criteria5Marks.map(function (id) {
+    return parseInt(id, 10);
+  });
+  // console.log(criteria1Marks);
+  // const studentsFinalMarks = [];
+  let groupFinalMarks=0;
+  for (let i = 0; i < student_ids.length; i++) {
+    let marks =
+      (criteria1Marks[i] +
+        criteria2Marks[i] +
+        criteria3Marks[i] +
+        criteria4Marks[i] +
+        criteria5Marks[i]) /
+      5;
+    groupFinalMarks += marks;
+    await db.query("update student set total=$1 where id=$2", [
+      marks,
+      student_ids[i],
+    ]);
+  }
+  await db.query("update faculty set score=$1 where id=$2", [
+    groupFinalMarks,
+    teacher_id,
+  ]);
+  // console.log(studentsFinalMarks);
   flag1 = true;
   res.redirect("/admin/score");
 });

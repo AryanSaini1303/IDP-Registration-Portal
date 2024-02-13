@@ -70,7 +70,8 @@ function search() {
             <label for="Criteria">C2</label>
             <label for="Criteria">C3</label>
             <label for="Criteria">C4</label>
-            <label for="Criteria">C5</label>`);
+            <label for="Criteria">C5</label>
+            <input type="hidden" name="teacher_id" value="${element.id}" />`);
       });
       results.forEach((element, index) => {
         data1.forEach((element1) => {
@@ -84,12 +85,12 @@ function search() {
               liElement.find("#grid-form")
                 .append(`<label for="name">${element1.name}</label>
                     <input type="hidden" name="student_ids" value="${element1.id}" />
-                    <input type="number" name="Criteria1" />
-                    <input type="number" name="Criteria2" />
-                    <input type="number" name="Criteria3" />
-                    <input type="number" name="Criteria4" />
-                    <input type="number" name="Criteria5" />`);
-                    //in above form we are sending input which is hidden from the user i.e. "student_ids"
+                    <input type="number" name="Criteria1" required/>
+                    <input type="number" name="Criteria2" required/>
+                    <input type="number" name="Criteria3" required/>
+                    <input type="number" name="Criteria4" required/>
+                    <input type="number" name="Criteria5" required/>`);
+              //in above form we are sending input which is hidden from the user i.e. "student_ids"
             }
           }
         });
@@ -123,7 +124,7 @@ $("body").on("click", "div > div.content > ul li", function () {
     $(`.${this.classList.value + "score"}`).css("display", "flex");
     $("body div > div.content > ul li").not(this).css("opacity", "0.3");
     $("body div > div.content > ul li").not(this).css("pointer-events", "none");
-    if ($(`.${this.classList.value + "score *"}`).length == 9) {
+    if ($(`.${this.classList.value + "score *"}`).length == 10) {
       clickCount--;
       // $(`.${this.classList.value + "score #grid-form"}`).css("display", "none");
       $(`.${this.classList.value + "score"}`).css("display", "none");
