@@ -37,6 +37,7 @@
         gap: 3rem;
         align-items: center;
         justify-content: center;
+        user-select: none;
       }
       .scores > ul {
         display: flex;
@@ -138,7 +139,7 @@
       #grid-form label[for="name"] {
         margin: auto 0;
       }
-      button[type="submit"] {
+      .btn {
         background-color: #17e719;
         border: none;
         border-radius: 30px;
@@ -148,12 +149,12 @@
         cursor: url("/images/cursor.png"), auto;
         transition: 0.3s all;
       }
-      button[type="submit"]:hover {
+      .btn:hover {
         background-color: #14da18;
         box-shadow: 3px 4px 9px darkgrey;
         transform: scale(1.05, 1.05);
       }
-      button[type="submit"]:active {
+      .btn:active {
         transform: scale(0.96, 0.96);
         box-shadow: 3px 4px 9px rgb(75, 74, 74);
       }
@@ -165,10 +166,13 @@
           width: 3.5rem;
         }
         #grid-form label[for="Criteria"] {
-          margin: 0 1.3rem;
+          margin: 0;
         }
         button[type="submit"] {
           padding: 0.6rem 0.8rem;
+        }
+        .menu1 li {
+          width: 90%;
         }
       }
       @media (max-width: 502px) {
@@ -214,38 +218,7 @@
           oninput="search()"
           placeholder="Teacher's name..."
         />
-        <ul class="menu1">
-          <% data.forEach((element) => {%>
-          <li class="<%= element.id %>">
-            <div class="info">
-              <div class="teacherInfo">
-                <h2><%= element.name %></h2>
-              </div>
-              <h4 class="topic"><%= element.project_title %></h4>
-            </div>
-            <div class="scores <%= element.id %>score">
-              <form action="/scoring" method="post" id="grid-form">
-                <label for="criteriaHeading">Criteria</label>
-                <label for="Criteria">C1</label>
-                <label for="Criteria">C2</label>
-                <label for="Criteria">C3</label>
-                <label for="Criteria">C4</label>
-                <label for="Criteria">C5</label>
-                <%data1.forEach((element1) => {
-                if(element.id==element1.teacher_id){%>
-                    <label for="name"><%= element1.name %></label>
-                    <input type="number" name="Criteria1" required />
-                    <input type="number" name="Criteria2" required />
-                    <input type="number" name="Criteria3" required />
-                    <input type="number" name="Criteria4" required />
-                    <input type="number" name="Criteria5" required />
-                <%console.log(element1.name)}})%>
-                <button type="submit">Submit</button>
-              </form>
-            </div>
-          </li>
-          <% }) %>
-        </ul>
+        <ul class="menu1"></ul>
       </div>
       <div class="flag1" style="display: none"><%= flag1 %></div>
       <footer>

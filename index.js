@@ -301,23 +301,18 @@ app.get("/search", async (req, res) => {
     //   "here======================================================>",
     //   data
     // );
-    const combinedData ={
-      data:data,
-      data1:data1
-    } 
+    const combinedData = {
+      data: data,
+      data1: data1,
+    };
     res.json(combinedData);
   } catch (error) {
     console.log(error);
   }
 });
 app.post("/scoring", async (req, res) => {
-  const query1 = req.body.Criteria1;
-  const query2 = req.body.Criteria2;
-  const query3 = req.body.Criteria3;
-  const query4 = req.body.Criteria4;
-  const query5 = req.body.Criteria5;
+  console.log(req.body);
   // const query2 = req.query.q2;
-  console.log(query1, query2, query3, query4, query5);
   // await db.query("update faculty set score=$1 where name=$2", [query2, query1]);
   flag1 = true;
   res.redirect("/admin/score");
