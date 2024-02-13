@@ -66,11 +66,11 @@ function search() {
         <div class="scores ${element.id}score">
           <form action="/scoring" method="post" id="grid-form">
             <label for="criteriaHeading">Criteria</label>
-            <label for="Criteria">C1</label>
-            <label for="Criteria">C2</label>
-            <label for="Criteria">C3</label>
-            <label for="Criteria">C4</label>
-            <label for="Criteria">C5</label>
+            <label for="Criteria">Creativity</label>
+            <label for="Criteria">Clarity</label>
+            <label for="Criteria">Originality</label>
+            <label for="Criteria">Engagement</label>
+            <label for="Criteria">Impact</label>
             <input type="hidden" name="teacher_id" value="${element.id}" />`);
       });
       results.forEach((element, index) => {

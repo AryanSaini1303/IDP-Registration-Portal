@@ -120,8 +120,9 @@
         /*i don't know why but if i use "form" instead of ".grid-form" and try to set display to grid then it somehows fails and behaves weirdly*/
         display: grid;
         grid-template-columns: repeat(6, 1fr);
-        gap: 1rem;
+        gap: 0.5rem 0;
         margin: 2rem 0;
+        place-items: center;
       }
       #grid-form input {
         width: 4.5rem;
@@ -133,21 +134,28 @@
         font-family: "Varela Round", sans-serif;
       }
       #grid-form label[for="Criteria"] {
-        width: 5rem;
-        margin: auto;
+        width: 100%;
+        text-align: center;
       }
       #grid-form label[for="name"] {
-        margin: auto 0;
+        width: 100%;
+      }
+      #grid-form label[for="criteriaHeading"] {
+        width: 100%;
       }
       .btn {
         background-color: #17e719;
         border: none;
         border-radius: 30px;
-        padding: 0.8rem 1rem;
+        padding: 0.8rem 0;
+        margin-top: 0.5rem;
         font-family: "Nunito", sans-serif;
         font-family: "Varela Round", sans-serif;
         cursor: url("/images/cursor.png"), auto;
         transition: 0.3s all;
+        width: 90%;
+        font-size: 1.05rem;
+        font-weight: bold;
       }
       .btn:hover {
         background-color: #14da18;
@@ -158,45 +166,9 @@
         transform: scale(0.96, 0.96);
         box-shadow: 3px 4px 9px rgb(75, 74, 74);
       }
-      @media (max-width: 682px) {
-        #grid-form {
-          gap: 0.2rem;
-        }
-        #grid-form input {
-          width: 3.5rem;
-        }
-        #grid-form label[for="Criteria"] {
-          margin: 0;
-        }
-        button[type="submit"] {
-          padding: 0.6rem 0.8rem;
-        }
-        .menu1 li {
-          width: 90%;
-        }
-      }
-      @media (max-width: 502px) {
-        #grid-form {
-          gap: 0;
-        }
-        #grid-form input {
-          width: 2rem;
-        }
-        #grid-form label[for="Criteria"] {
-          margin: 0 0.6rem;
-        }
-        button[type="submit"] {
-          padding: 0.4rem 0.6rem;
-        }
-        .info {
-          font-size: 0.8rem;
-        }
-        .info .topic {
-          width: 15rem;
-        }
-        #searchInput {
-          width: 90%;
-          font-size: 1rem;
+      @media (max-width: 764px) {
+        body {
+          display: none;
         }
       }
     </style>
