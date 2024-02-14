@@ -167,54 +167,80 @@ app.get("/topic", async (req, res) => {
     res.render("SDG", { category, photo, flag: true });
   }
   result.forEach(async (element, index) => {
+    let prohibitedSchools = [];
+    let schoolFlag=true;
+    const response3 = await db.query(
+      "select school from student where teacher_id=$1",
+      [element.id]
+    );
+    const result3 = response3.rows;
+    result3.forEach((element1, index1) => {
+      let count = 0;
+      for (let i = index1 + 1; i < result3.length; i++) {
+        if (element1.school == result3[i].school) {
+          // console.log(element1.school);
+          count++;
+          if (count == 3) {
+            prohibitedSchools.push(element1.school);
+            break;
+          }
+        }
+      }
+    });
+    // console.log("prohibitedSchools", prohibitedSchools);
+    if (prohibitedSchools.includes(current_school)) {
+      schoolFlag=false;
+    }
     const response1 = await db.query(
       "select id from student where teacher_id=$1",
       [element.id]
     );
     const result1 = response1.rows;
-    if (result1.length < 6) {
-      available_topics.push(element.project_title);
-      available_topics_id.push(element.id);
-      teachers.push(element.name);
-      designation.push(element.designation);
-    } else {
-      // console.log(element.project_title);
-      const response2 = await db.query(
-        "select distinct school from student where teacher_id=$1",
-        [element.id]
-      );
-      const distinct_schools = response2.rows;
-      // the distinct_schools array contains two objects, each with a school property
-      if (distinct_schools.length == 3 && result1.length < 8) {
+    if(schoolFlag){
+      if (result1.length < 6) {
+        available_topics.push(element.project_title);
+        available_topics_id.push(element.id);
+        teachers.push(element.name);
+        designation.push(element.designation);
+      } else {
         // console.log(element.project_title);
-        available_topics.push(element.project_title);
-        available_topics_id.push(element.id);
-        teachers.push(element.name);
-        designation.push(element.designation);
-      } else if (distinct_schools.length == 2 && result1.length == 6) {
-        available_topics.push(element.project_title);
-        available_topics_id.push(element.id);
-        teachers.push(element.name);
-        designation.push(element.designation);
-      } else if (
-        distinct_schools.length == 2 &&
-        result1.length == 7 &&
-        !distinct_schools.some((obj) => obj.school === current_school)
-      ) {
-        // here we are selecting each object of array distinct_schools and we are comparing values of "school" property against our variable current_school
-        available_topics.push(element.project_title);
-        available_topics_id.push(element.id);
-        teachers.push(element.name);
-        designation.push(element.designation);
-      } else if (
-        distinct_schools.length == 1 &&
-        result1.length == 6 &&
-        !distinct_schools.some((obj) => obj.school === current_school)
-      ) {
-        available_topics.push(element.project_title);
-        available_topics_id.push(element.id);
-        teachers.push(element.name);
-        designation.push(element.designation);
+        const response2 = await db.query(
+          "select distinct school from student where teacher_id=$1",
+          [element.id]
+        );
+        const distinct_schools = response2.rows;
+        // the distinct_schools array contains two objects, each with a school property
+        if (distinct_schools.length == 3 && result1.length < 8) {
+          // console.log(element.project_title);
+          available_topics.push(element.project_title);
+          available_topics_id.push(element.id);
+          teachers.push(element.name);
+          designation.push(element.designation);
+        } else if (distinct_schools.length == 2 && result1.length == 6) {
+          available_topics.push(element.project_title);
+          available_topics_id.push(element.id);
+          teachers.push(element.name);
+          designation.push(element.designation);
+        } else if (
+          distinct_schools.length == 2 &&
+          result1.length == 7 &&
+          !distinct_schools.some((obj) => obj.school === current_school)
+        ) {
+          // here we are selecting each object of array distinct_schools and we are comparing values of "school" property against our variable current_school
+          available_topics.push(element.project_title);
+          available_topics_id.push(element.id);
+          teachers.push(element.name);
+          designation.push(element.designation);
+        } else if (
+          distinct_schools.length == 1 &&
+          result1.length == 6 &&
+          !distinct_schools.some((obj) => obj.school === current_school)
+        ) {
+          available_topics.push(element.project_title);
+          available_topics_id.push(element.id);
+          teachers.push(element.name);
+          designation.push(element.designation);
+        }
       }
     }
     if (index == result.length - 1) {
@@ -277,7 +303,9 @@ function removeObjectsWithSameName(array) {
   });
 }
 app.get("/admin/view", async (req, res) => {
-  const response = await db.query("select name,id,project_title,score from faculty");
+  const response = await db.query(
+    "select name,id,project_title,score from faculty"
+  );
   let data = response.rows;
   data = removeObjectsWithSameName(data);
   const response1 = await db.query("select * from student");
@@ -347,14 +375,14 @@ app.post("/scoring", async (req, res) => {
   });
   // console.log(criteria1Marks);
   // const studentsFinalMarks = [];
-  let groupFinalMarks=0;
+  let groupFinalMarks = 0;
   for (let i = 0; i < student_ids.length; i++) {
     let marks =
-      (criteria1Marks[i] +
-        criteria2Marks[i] +
-        criteria3Marks[i] +
-        criteria4Marks[i] +
-        criteria5Marks[i]);
+      criteria1Marks[i] +
+      criteria2Marks[i] +
+      criteria3Marks[i] +
+      criteria4Marks[i] +
+      criteria5Marks[i];
     groupFinalMarks += marks;
     await db.query("update student set total=$1 where id=$2", [
       marks,
