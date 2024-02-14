@@ -266,7 +266,6 @@ app.get("/selection", async (req, res) => {
   ]);
   res.render("final", [photo]);
 });
-app.get("/admin/view", async (req, res) => {});
 function removeObjectsWithSameName(array) {
   const data = new Set();
   return array.filter((obj) => {
@@ -277,6 +276,16 @@ function removeObjectsWithSameName(array) {
     return false;
   });
 }
+app.get("/admin/view", async (req, res) => {
+  const response = await db.query("select name,id,project_title,score from faculty");
+  let data = response.rows;
+  data = removeObjectsWithSameName(data);
+  const response1 = await db.query("select * from student");
+  data1 = response1.rows;
+  // console.log("result", data1);
+  res.render("view", { data, data1, flag1 });
+  flag1 = false;
+});
 let flag1 = false;
 app.get("/admin/score", async (req, res) => {
   const response = await db.query("select name,id,project_title from faculty");
@@ -345,8 +354,7 @@ app.post("/scoring", async (req, res) => {
         criteria2Marks[i] +
         criteria3Marks[i] +
         criteria4Marks[i] +
-        criteria5Marks[i]) /
-      5;
+        criteria5Marks[i]);
     groupFinalMarks += marks;
     await db.query("update student set total=$1 where id=$2", [
       marks,

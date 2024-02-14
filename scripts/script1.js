@@ -64,17 +64,11 @@ function search() {
           <h4 class="topic">${element.project_title}</h4>
         </div>
         <div class="scores ${element.id}score">
-          <form action="/scoring" method="post" id="grid-form">
-            <label for="criteriaHeading">Criteria</label>
-            <label for="Criteria">Creativity</label>
-            <label for="Criteria">Clarity</label>
-            <label for="Criteria">Originality</label>
-            <label for="Criteria">Engagement</label>
-            <label for="Criteria">Impact</label>
-            <input type="hidden" name="teacher_id" value="${element.id}" />`);
+          <div id="groupDetails">`);
       });
       results.forEach((element, index) => {
-        data1.forEach((element1) => {
+        let numOfStudents = 0;
+        data1.forEach((element1, index1) => {
           if (element.id == element1.teacher_id) {
             // console.log(element1);
             // Find the li element with the matching id
@@ -82,26 +76,25 @@ function search() {
             // Check if the li element exists
             if (liElement.length > 0) {
               // Append the form to the found li element
-              liElement.find("#grid-form")
-                .append(`<label for="name">${element1.name}</label>
-                    <input type="hidden" name="student_ids" value="${element1.id}" />
-                    <input type="number" name="Criteria1" required min="1" max="10"/>
-                    <input type="number" name="Criteria2" required min="1" max="10"/>
-                    <input type="number" name="Criteria3" required min="1" max="10"/>
-                    <input type="number" name="Criteria4" required min="1" max="10"/>
-                    <input type="number" name="Criteria5" required min="1" max="10"/>`);
-              //in above form we are sending input which is hidden from the user i.e. "student_ids"
+              liElement
+                .find("#groupDetails")
+                .append(
+                  `<h4 class="name">${element1.name} <span class="marks">${element1.total}</span></h4>`
+                );
+              numOfStudents++;
+            }
+            if (index1 == data1.length - 1) {
+              liElement.find("#groupDetails")
+                .append(`<p class="name">Total students: ${numOfStudents} <span>Total marks: ${element.score}</span></p>
+                <div class="btnContainer">
+                    <button type="button" class="close btn" style="background-color:red">Close</button>
+                </div>
+            </div>
+            </div>
+          </li>`);
             }
           }
         });
-        if (index == results.length - 1) {
-          $("body > div > div.content > ul li #grid-form")
-            .append(`<button type="submit" class="btn">Submit</button>
-            <button type="button" class="close btn" style="background-color:red">Close</button>
-              </form>
-            </div>
-          </li>`);
-        }
       });
     }
   };
@@ -124,7 +117,7 @@ $("body").on("click", "div > div.content > ul li", function () {
     $(`.${this.classList.value + "score"}`).css("display", "flex");
     $("body div > div.content > ul li").not(this).css("opacity", "0.3");
     $("body div > div.content > ul li").not(this).css("pointer-events", "none");
-    if ($(`.${this.classList.value + "score *"}`).length == 10) {
+    if ($(`.${this.classList.value + "score *"}`).length == 1) {
       clickCount--;
       // $(`.${this.classList.value + "score #grid-form"}`).css("display", "none");
       $(`.${this.classList.value + "score"}`).css("display", "none");
@@ -137,7 +130,12 @@ $("body").on("click", "div > div.content > ul li", function () {
   }
   $("body").on("click", "div > div.content > ul li .close", function () {
     // const parentClass = $(this).parent().parent().parent().attr("class")[7];
-    const parentClass = $(this).parent().parent().parent().attr("class");
+    const parentClass = $(this)
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .attr("class");
     // console.log(parentClass);
     $(`.${parentClass + "score"}`).css("display", "none");
     $("body div > div.content > ul li").not(this).css("opacity", "1");
