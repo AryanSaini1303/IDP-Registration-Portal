@@ -69,34 +69,34 @@ function search() {
       results.forEach((element, index) => {
         let numOfStudents = 0;
         data1.forEach((element1, index1) => {
-            if (element.id == element1.teacher_id) {
-                let marks = 0;
-                if (element1.total == null) {
-                    marks = "---";
-                } else {
-                    marks = element1.total;
-                }
-                // console.log(element1);
-                // Find the li element with the matching id
-                const liElement = $("." + element.id);
-                // Check if the li element exists
-                if (liElement.length > 0) {
-                    // Append the form to the found li element
-                    liElement
-                        .find("#groupDetails")
-                        .append(
-                            `<h4 class="name">${element1.name} <span class="marks">${marks}</span></h4>`
-                        );
-                    numOfStudents++;
-                }
+          if (element.id == element1.teacher_id) {
+            let marks = 0;
+            if (element1.total == null) {
+              marks = "---";
+            } else {
+              marks = element1.total;
             }
+            // console.log(element1);
+            // Find the li element with the matching id
+            const liElement = $("." + element.id);
+            // Check if the li element exists
+            if (liElement.length > 0) {
+              // Append the form to the found li element
+              liElement
+                .find("#groupDetails")
+                .append(
+                  `<h4 class="name">${element1.name} <span class="marks">${marks}</span></h4>`
+                );
+              numOfStudents++;
+            }
+          }
         });
-    
+
         // Append the button outside of the inner loop
         const liElement = $("." + element.id);
         if (liElement.length > 0) {
-            liElement.find("#groupDetails")
-                .append(`<p class="name">Total students: ${numOfStudents} <span>Total marks: ${element.score}</span></p>
+          liElement.find("#groupDetails")
+            .append(`<p class="name">Total students: ${numOfStudents} <span style="font-size:1.05rem">Total marks: ${element.score}</span></p>
                     <div class="btnContainer">
                         <button type="button" class="close btn" style="background-color:red">Close</button>
                     </div>
@@ -104,7 +104,7 @@ function search() {
                 </div>
             </li>`);
         }
-    });    
+      });
     }
   };
   xhr.send();
