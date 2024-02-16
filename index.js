@@ -325,6 +325,16 @@ app.get("/admin/external_score", async (req, res) => {
   res.render("external_score", { data, data1, flag1 });
   flag1 = false;
 });
+app.get("/admin/internal_score", async (req, res) => {
+  const response = await db.query("select name,id,project_title from faculty");
+  let data = response.rows;
+  data = removeObjectsWithSameName(data);
+  const response1 = await db.query("select * from student");
+  data1 = response1.rows;
+  // console.log("result", data1);
+  res.render("internal_score", { data, data1, flag1 });
+  flag1 = false;
+});
 app.get("/search", async (req, res) => {
   const query = req.query.q.replace(/\b\w/g, (match) => match.toUpperCase());
   // console.log(query);
@@ -348,7 +358,41 @@ app.get("/search", async (req, res) => {
     console.log(error);
   }
 });
-app.post("/scoring", async (req, res) => {
+let groupFinalMarks = 0;
+app.post("/external_scoring", async (req, res) => {
+  // console.log(req.body);
+  const student_ids = req.body.student_ids;
+  const teacher_id = req.body.teacher_id;
+  // console.log(teacher_id);
+  let criteria1Marks = req.body.Criteria1;
+  criteria1Marks = criteria1Marks.map(function (id) {
+    return parseInt(id, 10);
+  });
+  let criteria2Marks = req.body.Criteria2;
+  criteria2Marks = criteria2Marks.map(function (id) {
+    return parseInt(id, 10);
+  });
+  // console.log(criteria1Marks);
+  // const studentsFinalMarks = [];
+  for (let i = 0; i < student_ids.length; i++) {
+    let marks =
+      criteria1Marks[i] +
+      criteria2Marks[i];
+    groupFinalMarks += marks;
+    await db.query("update student set external_score=$1 where id=$2", [
+      marks,
+      student_ids[i],
+    ]);
+  }
+  await db.query("update faculty set score=$1 where id=$2", [
+    groupFinalMarks,
+    teacher_id,
+  ]);
+  // console.log(studentsFinalMarks);
+  flag1 = true;
+  res.redirect("/admin/external_score");
+});
+app.post("/internal_scoring", async (req, res) => {
   // console.log(req.body);
   const student_ids = req.body.student_ids;
   const teacher_id = req.body.teacher_id;
@@ -369,22 +413,16 @@ app.post("/scoring", async (req, res) => {
   criteria4Marks = criteria4Marks.map(function (id) {
     return parseInt(id, 10);
   });
-  let criteria5Marks = req.body.Criteria5;
-  criteria5Marks = criteria5Marks.map(function (id) {
-    return parseInt(id, 10);
-  });
   // console.log(criteria1Marks);
   // const studentsFinalMarks = [];
-  let groupFinalMarks = 0;
   for (let i = 0; i < student_ids.length; i++) {
     let marks =
       criteria1Marks[i] +
-      criteria2Marks[i] +
-      criteria3Marks[i] +
-      criteria4Marks[i] +
-      criteria5Marks[i];
+      criteria2Marks[i]+
+      criteria3Marks[i]+
+      criteria4Marks[i];
     groupFinalMarks += marks;
-    await db.query("update student set total=$1 where id=$2", [
+    await db.query("update student set internal_score=$1 where id=$2", [
       marks,
       student_ids[i],
     ]);
@@ -395,7 +433,7 @@ app.post("/scoring", async (req, res) => {
   ]);
   // console.log(studentsFinalMarks);
   flag1 = true;
-  res.redirect("/admin/score");
+  res.redirect("/admin/internal_score");
 });
 
 app.listen(port, () => {

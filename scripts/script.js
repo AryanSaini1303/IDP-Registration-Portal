@@ -64,7 +64,7 @@ function search() {
           <h4 class="topic">${element.project_title}</h4>
         </div>
         <div class="scores ${element.id}score">
-          <form action="/scoring" method="post" id="grid-form">
+          <form action="/external_scoring" method="post" id="grid-form">
             <label for="criteriaHeading">Criteria</label>
             <label for="Criteria">Creativity</label>
             <label for="Criteria">Clarity</label>

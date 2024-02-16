@@ -64,50 +64,42 @@ function search() {
           <h4 class="topic">${element.project_title}</h4>
         </div>
         <div class="scores ${element.id}score">
-          <div id="groupDetails">
-          <h3 class="name">Student name <span><h3>Internal</h3></span> <span><h3>External</h3></span></h3>`);
+          <form action="/internal_scoring" method="post" id="grid-form">
+            <label for="criteriaHeading">Criteria</label>
+            <label for="Criteria">Creativity</label>
+            <label for="Criteria">Clarity</label>
+            <label for="Criteria">Understanding</label>
+            <label for="Criteria">Confidence</label>
+            <input type="hidden" name="teacher_id" value="${element.id}" />`);
       });
       results.forEach((element, index) => {
-        let numOfStudents = 0;
-        data1.forEach((element1, index1) => {
+        data1.forEach((element1) => {
           if (element.id == element1.teacher_id) {
-            let internalMarks = 0;
-            let externalMarks = 0;
-            if (element1.internal_score == null) {
-              internalMarks = "---";
-            } else if (element1.external_score == null) {
-              externalMarks = "---";
-            } else {
-              internalMarks = element1.internal_score;
-              externalMarks = element1.external_score;
-            }
             // console.log(element1);
             // Find the li element with the matching id
             const liElement = $("." + element.id);
             // Check if the li element exists
             if (liElement.length > 0) {
               // Append the form to the found li element
-              liElement
-                .find("#groupDetails")
-                .append(
-                  `<h4 class="name">${element1.name} <span class="marks">${internalMarks}</span> <span class="marks">${externalMarks}</span></h4>`
-                );
-              numOfStudents++;
+              liElement.find("#grid-form")
+                .append(`<label for="name">${element1.name}</label>
+                    <input type="hidden" name="student_ids" value="${element1.id}" />
+                    <input type="number" name="Criteria1" required min="1" max="10"/>
+                    <input type="number" name="Criteria2" required min="1" max="10"/>
+                    <input type="number" name="Criteria3" required min="1" max="10"/>
+                    <input type="number" name="Criteria4" required min="1" max="20"/>`);
+              //in above form we are sending input which is hidden from the user i.e. "student_ids"
             }
           }
         });
-
-        // Append the button outside of the inner loop
-        const liElement = $("." + element.id);
-        if (liElement.length > 0) {
-          liElement.find("#groupDetails")
-            .append(`<p class="name">Total students: ${numOfStudents} <span style="font-size:1.05rem">Total marks: ${element.score}</span></p>
-                    <div class="btnContainer">
-                        <button type="button" class="close btn" style="background-color:red">Close</button>
-                    </div>
-                </div>
-                </div>
-            </li>`);
+        if (index == results.length - 1) {
+          $("body > div > div.content > ul li #grid-form")
+            .append(`<button type="submit" class="btn">Submit</button>
+            <button type="button" class="close btn" style="background-color:red">Close</button>
+              </form>
+              </div>
+              <p class="marksType">Internal*</p>
+          </li>`);
         }
       });
     }
@@ -131,7 +123,7 @@ $("body").on("click", "div > div.content > ul li", function () {
     $(`.${this.classList.value + "score"}`).css("display", "flex");
     $("body div > div.content > ul li").not(this).css("opacity", "0.3");
     $("body div > div.content > ul li").not(this).css("pointer-events", "none");
-    if ($(`.${this.classList.value + "score #groupDetails *"}`).length == 9) {
+    if ($(`.${this.classList.value + "score *"}`).length == 8) {
       clickCount--;
       // $(`.${this.classList.value + "score #grid-form"}`).css("display", "none");
       $(`.${this.classList.value + "score"}`).css("display", "none");
@@ -144,12 +136,7 @@ $("body").on("click", "div > div.content > ul li", function () {
   }
   $("body").on("click", "div > div.content > ul li .close", function () {
     // const parentClass = $(this).parent().parent().parent().attr("class")[7];
-    const parentClass = $(this)
-      .parent()
-      .parent()
-      .parent()
-      .parent()
-      .attr("class");
+    const parentClass = $(this).parent().parent().parent().attr("class");
     // console.log(parentClass);
     $(`.${parentClass + "score"}`).css("display", "none");
     $("body div > div.content > ul li").not(this).css("opacity", "1");

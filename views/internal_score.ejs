@@ -116,48 +116,45 @@
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.634);
         border: none;
       }
-      #groupDetails {
-        width: 100%;
-      }
-      #groupDetails .name {
+      #grid-form {
+        /*i don't know why but if i use "form" instead of ".grid-form" and try to set display to grid then it somehows fails and behaves weirdly*/
         display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr;
-      }
-      #groupDetails .name span {
         position: relative;
-        z-index: 1;
-        font-size: 0.9rem;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem 0;
+        margin: 2rem 0;
+        place-items: center;
+      }
+      #grid-form input {
+        width: 4.5rem;
+        height: 1.5rem;
+        border-radius: 30px;
+        text-align: center;
+        font-weight: bolder;
+        font-family: "Nunito", sans-serif;
+        font-family: "Varela Round", sans-serif;
+      }
+      #grid-form label[for="Criteria"] {
+        width: 100%;
         text-align: center;
       }
-      #groupDetails .name span h3 {
-        margin: 0;
-      }
-      #groupDetails .name .marks::before {
-        content: "";
-        background-color: #14da18;
-        height: 2rem;
-        width: 2rem;
-        border-radius: 50%;
-        position: absolute;
-        left: 38%;
-        top: -30%;
-        z-index: -1;
-      }
-      .btnContainer {
+      #grid-form label[for="name"] {
         width: 100%;
-        display: flex;
-        justify-content: center;
+      }
+      #grid-form label[for="criteriaHeading"] {
+        width: 100%;
       }
       .btn {
         background-color: #17e719;
         border: none;
         border-radius: 30px;
         padding: 0.8rem 0;
+        margin-top: 0.5rem;
         font-family: "Nunito", sans-serif;
         font-family: "Varela Round", sans-serif;
         cursor: url("/images/cursor.png"), auto;
         transition: 0.3s all;
-        width: 50%;
+        width: 90%;
         font-size: 1.05rem;
       }
       .btn:hover {
@@ -168,6 +165,11 @@
       .btn:active {
         transform: scale(0.96, 0.96);
         box-shadow: 3px 4px 9px rgb(75, 74, 74);
+      }
+      .marksType {
+        position: absolute;
+        bottom: -3.5rem;
+        right: -0.5rem;
       }
       @media (max-width: 764px) {
         body {
@@ -209,6 +211,6 @@
       </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="/scripts/script1.js"></script>
+    <script src="/scripts/script2.js"></script>
   </body>
 </html>
