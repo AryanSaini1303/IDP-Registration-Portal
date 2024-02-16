@@ -168,7 +168,7 @@ app.get("/topic", async (req, res) => {
   }
   result.forEach(async (element, index) => {
     let prohibitedSchools = [];
-    let schoolFlag=true;
+    let schoolFlag = true;
     const response3 = await db.query(
       "select school from student where teacher_id=$1",
       [element.id]
@@ -189,14 +189,14 @@ app.get("/topic", async (req, res) => {
     });
     // console.log("prohibitedSchools", prohibitedSchools);
     if (prohibitedSchools.includes(current_school)) {
-      schoolFlag=false;
+      schoolFlag = false;
     }
     const response1 = await db.query(
       "select id from student where teacher_id=$1",
       [element.id]
     );
     const result1 = response1.rows;
-    if(schoolFlag){
+    if (schoolFlag) {
       if (result1.length < 6) {
         available_topics.push(element.project_title);
         available_topics_id.push(element.id);
@@ -315,14 +315,14 @@ app.get("/admin/view", async (req, res) => {
   flag1 = false;
 });
 let flag1 = false;
-app.get("/admin/score", async (req, res) => {
+app.get("/admin/external_score", async (req, res) => {
   const response = await db.query("select name,id,project_title from faculty");
   let data = response.rows;
   data = removeObjectsWithSameName(data);
   const response1 = await db.query("select * from student");
   data1 = response1.rows;
   // console.log("result", data1);
-  res.render("score", { data, data1, flag1 });
+  res.render("external_score", { data, data1, flag1 });
   flag1 = false;
 });
 app.get("/search", async (req, res) => {

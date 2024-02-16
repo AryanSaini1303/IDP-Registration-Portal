@@ -68,9 +68,6 @@ function search() {
             <label for="criteriaHeading">Criteria</label>
             <label for="Criteria">Creativity</label>
             <label for="Criteria">Clarity</label>
-            <label for="Criteria">Originality</label>
-            <label for="Criteria">Engagement</label>
-            <label for="Criteria">Impact</label>
             <input type="hidden" name="teacher_id" value="${element.id}" />`);
       });
       results.forEach((element, index) => {
@@ -85,11 +82,8 @@ function search() {
               liElement.find("#grid-form")
                 .append(`<label for="name">${element1.name}</label>
                     <input type="hidden" name="student_ids" value="${element1.id}" />
-                    <input type="number" name="Criteria1" required min="1" max="10"/>
-                    <input type="number" name="Criteria2" required min="1" max="10"/>
-                    <input type="number" name="Criteria3" required min="1" max="10"/>
-                    <input type="number" name="Criteria4" required min="1" max="10"/>
-                    <input type="number" name="Criteria5" required min="1" max="10"/>`);
+                    <input type="number" name="Criteria1" required min="1" max="30"/>
+                    <input type="number" name="Criteria2" required min="1" max="20"/>`);
               //in above form we are sending input which is hidden from the user i.e. "student_ids"
             }
           }
@@ -99,7 +93,8 @@ function search() {
             .append(`<button type="submit" class="btn">Submit</button>
             <button type="button" class="close btn" style="background-color:red">Close</button>
               </form>
-            </div>
+              </div>
+              <p class="marksType">External*</p>
           </li>`);
         }
       });
@@ -124,7 +119,7 @@ $("body").on("click", "div > div.content > ul li", function () {
     $(`.${this.classList.value + "score"}`).css("display", "flex");
     $("body div > div.content > ul li").not(this).css("opacity", "0.3");
     $("body div > div.content > ul li").not(this).css("pointer-events", "none");
-    if ($(`.${this.classList.value + "score *"}`).length == 10) {
+    if ($(`.${this.classList.value + "score *"}`).length == 8) {
       clickCount--;
       // $(`.${this.classList.value + "score #grid-form"}`).css("display", "none");
       $(`.${this.classList.value + "score"}`).css("display", "none");
@@ -144,3 +139,26 @@ $("body").on("click", "div > div.content > ul li", function () {
     $("body div > div.content > ul li").not(this).css("pointer-events", "auto");
   });
 });
+let count2 = 1;
+function revealbtns() {
+  count2++;
+  if (count2 % 2 == 0) {
+    $(".wrapper .content .card1").css("display", "flex");
+    $(".wrapper .content .card1").css("opacity", "1");
+    $(
+      "body > div > div.content > div:nth-child(1) > div > div > a:nth-child(2)"
+    ).css("pointer-events", "none");
+    $(
+      "body > div > div.content > div:nth-child(1) > div > div > a:nth-child(2)"
+    ).css("opacity", "0.5");
+  } else {
+    $(".wrapper .content .card1").css("display", "none");
+    $(".wrapper .content .card1").css("opacity", "0");
+    $(
+      "body > div > div.content > div:nth-child(1) > div > div > a:nth-child(2)"
+    ).css("pointer-events", "auto");
+    $(
+      "body > div > div.content > div:nth-child(1) > div > div > a:nth-child(2)"
+    ).css("opacity", "1");
+  }
+}
