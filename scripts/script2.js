@@ -123,7 +123,7 @@ $("body").on("click", "div > div.content > ul li", function () {
     $(`.${this.classList.value + "score"}`).css("display", "flex");
     $("body div > div.content > ul li").not(this).css("opacity", "0.3");
     $("body div > div.content > ul li").not(this).css("pointer-events", "none");
-    if ($(`.${this.classList.value + "score *"}`).length == 8) {
+    if ($(`.${this.classList.value + "score *"}`).length == 10) {
       clickCount--;
       // $(`.${this.classList.value + "score #grid-form"}`).css("display", "none");
       $(`.${this.classList.value + "score"}`).css("display", "none");
